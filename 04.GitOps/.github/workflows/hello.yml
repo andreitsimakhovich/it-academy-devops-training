@@ -17,9 +17,9 @@ jobs:
           chmod +x hello.py
           /home/debian/it-academy-training/04.GitOps/hello.py > output.txt
 
-      -name: Upload output
-       uses: actions/upload-artifact@v4
-       with: 
-         name: script-output
-         path: output.txt 
+      - name: Upload output
+        uses: actions/upload-artifact@v4
+        with: 
+          name: script-output
+          path: output.txt
 
