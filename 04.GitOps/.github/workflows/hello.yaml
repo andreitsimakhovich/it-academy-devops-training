@@ -10,16 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       
-      - name: Run script
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Run script and save output
         run: |
-          chmod +x hello.py
+          chmod +x /home/debian/it-academy-training/04.GitOps/hello.py
           /home/debian/it-academy-training/04.GitOps/hello.py > output.txt
 
-      - name: Upload output
+      - name: Upload output as artifact
         uses: actions/upload-artifact@v4
-        with: 
+        with:
           name: script-output
           path: output.txt
-
