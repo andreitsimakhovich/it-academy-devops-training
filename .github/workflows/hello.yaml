@@ -19,8 +19,8 @@ jobs:
       
       - name: Run script and save output
         run: |
-          chmod +x /home/debian/it-academy-training/04.GitOps/hello.py
-          /home/debian/it-academy-training/04.GitOps/hello.py > output.txt
+          chmod +x 04.GitOps/hello.py
+          04.GitOps/hello.py > output.txt
 
       - name: Upload output as artifact
         uses: actions/upload-artifact@v4
