@@ -1,1 +1,0 @@
-python3: can't open file '/home/debian/it-academy-training/.github/workflows/test-calc.py': [Errno 2] No such file or directory
