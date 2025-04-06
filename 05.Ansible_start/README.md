@@ -13,7 +13,7 @@ ansible [core 2.14.18]
   executable location = /usr/bin/ansible
   python version = 3.11.2 (main, Nov 30 2024, 21:22:50) [GCC 12.2.0] (/usr/bin/python3)
   jinja version = 3.1.2
-  libyaml = True
+  libyaml = True```
 ### Ansible playbook
 1. Create hello_ansible.yaml file.
 2. Run file:
