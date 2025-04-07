@@ -1,0 +1,55 @@
+- name: Remove Nginx virtualhosts and cleanup
+  hosts: webservers
+  become: yes
+
+  vars:
+    sites:
+      - hostname: sa-19
+        fqdn: sa-19.it-academy.local
+      - hostname: sa-20
+        fqdn: sa-20.it-academy.local
+
+  tasks:
+    - name: Remove web root directories
+      file:
+        path: "/var/www/{{ item.hostname }}"
+        state: absent
+      loop: "{{ sites }}"
+
+    - name: Remove Nginx site configurations
+      file:
+        path: "/etc/nginx/sites-available/{{ item.hostname }}.conf"
+        state: absent
+      loop: "{{ sites }}"
+
+    - name: Remove Nginx site symlinks
+      file:
+        path: "/etc/nginx/sites-enabled/{{ item.hostname }}.conf"
+        state: absent
+      loop: "{{ sites }}"
+
+    - name: Ensure default site is enabled (if it was removed)
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: link
+        src: /etc/nginx/sites-available/default
+
+    - name: Remove Nginx package
+      apt:
+        name: nginx
+        state: absent
+
+    - name: Test Nginx config
+      command: nginx -t
+      register: nginx_test
+      changed_when: false
+
+    - name: Show Nginx config test result
+      debug:
+        var: nginx_test.stdout_lines
+
+    - name: Reload Nginx to apply changes
+      service:
+        name: nginx
+        state: reloaded
+
