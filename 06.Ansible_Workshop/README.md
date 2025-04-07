@@ -91,7 +91,8 @@ ok: [host_19] => {
             "ansible_loop_var": "item",
             "changed": false,
             "connection": "close",
-            "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>sa-19.it-academy.local</title>\n  </head>\n  <body>\n    <h1>Hello from sa-19!</h1>\n    <p>This is sa-19.it-academy.local</p>\n  </body>\n</html>\n",
+            "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>sa-19.it-academy.local</title>\n  </head>\n  <body>\n    <h1>Hello from sa-19!</h1>\n   
+ <p>This is sa-19.it-academy.local</p>\n  </body>\n</html>\n",
             "content_length": "184",
             "content_type": "text/html",
             "cookies": {},
@@ -185,7 +186,8 @@ ok: [host_20] => {
             "ansible_loop_var": "item",
             "changed": false,
             "connection": "close",
-            "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>sa-20.it-academy.local</title>\n  </head>\n  <body>\n    <h1>Hello from sa-20!</h1>\n    <p>This is sa-20.it-academy.local</p>\n  </body>\n</html>\n",
+            "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>sa-20.it-academy.local</title>\n  </head>\n  <body>\n    <h1>Hello from sa-20!</h1>\n   
+ <p>This is sa-20.it-academy.local</p>\n  </body>\n</html>\n",
             "content_length": "184",
             "content_type": "text/html",
             "cookies": {},
