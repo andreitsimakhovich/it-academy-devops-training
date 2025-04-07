@@ -3,7 +3,7 @@
 # Structure
 |-- ini.yaml  
 |-- playbook.yaml  
-|-- templates/  
+|-- templates/   
     |--vhost.conf.j2  
     |--vhost.conf.j2  
 
