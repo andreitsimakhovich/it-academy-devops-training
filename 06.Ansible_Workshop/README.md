@@ -4,8 +4,8 @@
 |-- ini.yaml  
 |-- playbook.yaml  
 |-- templates/   
-      |--vhost.conf.j2  
-      |--vhost.conf.j2  
+-------vhost.conf.j2  
+-------vhost.conf.j2  
 
 1. Create all the files listed above.
 2. Run playbook.yaml:
