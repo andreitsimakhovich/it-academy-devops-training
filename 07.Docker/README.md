@@ -63,7 +63,7 @@ CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                 
 
 ### Staructure of project
 .  
-|-- app.py
+|-- app.py  
 |-- Dockerfile  
 |-- requirements.txt  
 |-- nginx.conf
