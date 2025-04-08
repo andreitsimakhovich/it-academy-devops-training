@@ -61,7 +61,7 @@ CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                 
 
 ## Homework Assignment 2: Building a Docker Image with Dockerfile
 
-# Staructure of project
+### Staructure of project
 .  
 |-- app.py
 |-- Dockerfile  
