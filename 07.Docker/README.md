@@ -69,7 +69,7 @@ CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                 
 |-- nginx.conf
 1. Create the files mentioned above.
 2. Run build:
-```docker build -t flask-nginx-debian . ```
+```docker build -t flask-nginx-debian . ```  
 Porgress:   
 ```bash
 [+] Building 186.1s (12/12) FINISHED                                                                                                                                                      docker:default
@@ -95,9 +95,9 @@ Porgress:
  1 warning found (use docker --debug to expand):
  - JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals (line 20)
 ```
-3. Run container:
+3. Run container:  
 ```docker run -d -p 8080:80 flask-nginx-debian```
-``bash 
+```bash 
 debian@vbox ~/i/07.Docker (master)> docker run -d -p 8080:80 flask-nginx-debian
 0332ae55ae2c357c2291a3791f4bba2a7971187cdc0aa05de6659fb8ba160d92
   
