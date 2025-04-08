@@ -58,3 +58,12 @@ CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                 
 70331da05011   hello-world   "/hello"   2 minutes ago    Exited (0) 2 minutes ago              recursing_bose
 8d2519c9321e   hello-world   "/hello"   15 minutes ago   Exited (0) 15 minutes ago             keen_moore
 ```
+
+## Homework Assignment 2: Building a Docker Image with Dockerfile
+
+# Staructure of project
+.  
+|-- app.py
+|-- Dockerfile  
+|-- requirements.txt  
+|-- nginx.conf
