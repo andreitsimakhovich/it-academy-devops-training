@@ -8,9 +8,11 @@
 
 1. Create docker-compose file. Drupal 9 + MySql 8.
 2. Create .env file for storing passwords. Add .env to .gitignore.
-3. Run ```docker compose up -d```  
+3. Run 
+``` docker compose up -d ```
 Output:  
-```bash
+
+```
 WARN[0000] /home/debian/it-academy-training/08.Docker/docker-compose.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
 [+] Running 30/30
  ✔ db Pulled                                                                                                                                                                                      102.4s 
@@ -48,18 +50,20 @@ WARN[0000] /home/debian/it-academy-training/08.Docker/docker-compose.yaml: the a
  ✔ Volume "08docker_drupal_data"  Created                                                                                                                                                           0.0s 
  ✔ Volume "08docker_db_data"      Created                                                                                                                                                           0.0s 
  ✔ Container 08docker-db-1        Started                                                                                                                                                           8.2s 
- ✔ Container 08docker-drupal-1    Started                                                                                                                                                           9.2s ```
+ ✔ Container 08docker-drupal-1    Started                                                                                                                                                           9.2s 
+
+```
 
 4. Check containers:    
 
-```bash
+```
 debian@vbox ~/i/08.Docker (master) [4]> docker ps
 CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS                                     NAMES
 040061a97c71   drupal:9-apache   "docker-php-entrypoi…"   13 minutes ago   Up 13 minutes   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   08docker-drupal-1
 67764eed2d3c   mysql:8           "docker-entrypoint.s…"   13 minutes ago   Up 13 minutes   3306/tcp, 33060/tcp                       08docker-db-1
 ```
 5. Check drupal isntall page:  
-```bash
+```
 debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
 <!DOCTYPE html>
 <html>
@@ -72,10 +76,12 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
     <body>
         Redirecting to <a href="/core/install.php">/core/install.php</a>.
     </body>
-</html>⏎                                                                                                                                                                                                 ```
+</html>⏎   
+
+```                                                                                                                                                                                               ```
 6. Connect to db and install drupal.
 7. Go to: http://localhost:8080  
-```bash
+```
 debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
