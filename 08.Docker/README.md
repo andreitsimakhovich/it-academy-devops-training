@@ -3,8 +3,8 @@
 ## Homework Assignment 1: Docker Compose for Application Stacks
 
 ### Structure of project
-|-- docker-compose.yaml
-|-- .env
+|-- docker-compose.yaml  
+|-- .env  
 
 1. Create docker-compose file. Drupal 9 + MySql 8.
 2. Create .env file for storing passwords. Add .env to .gitignore.
