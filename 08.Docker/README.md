@@ -64,8 +64,7 @@ CONTAINER ID   IMAGE             COMMAND                  CREATED          STATU
 67764eed2d3c   mysql:8           "docker-entrypoint.s…"   13 minutes ago   Up 13 minutes   3306/tcp, 33060/tcp                       08docker-db-1
 ```
 5. Check drupal isntall page:  
-```bash
-debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
+```debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080```
 <!DOCTYPE html>
 <html>
     <head>
@@ -78,11 +77,8 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
         Redirecting to <a href="/core/install.php">/core/install.php</a>.
     </body>
 </html> 
-```
 
-
- 
-                                                                                                                                                                                               ```
+                                                                                                                                                                                       ```
 6. Connect to db and install drupal.
 
 7. Go to: http://localhost:8080
