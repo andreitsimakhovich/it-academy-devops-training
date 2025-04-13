@@ -1,0 +1,33 @@
+name: Docker Build with Slack
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-notify:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🐳 Build Docker image
+        run: docker build -t my-flask-app .
+
+      - name: ✅ Slack notify success
+        if: success()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"✅ Docker image for *my-flask-app* built successfully!"}' \
+          $SLACK_WEBHOOK
+
+      - name: ❌ Slack notify fail
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"❌ Docker build failed for *my-flask-app*."}' \
+          $SLACK_WEBHOOK
+
