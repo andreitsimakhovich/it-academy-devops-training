@@ -22,7 +22,6 @@ jobs:
       run: |
         docker build -t ${IMAGE_NAME} ./08.Docker
 
-    # Пример Slack уведомлений, если сборка прошла успешно
     - name: Slack Notification (Success)
       if: success()
       uses: rtCamp/action-slack-notify@v2
@@ -30,7 +29,6 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: "✅ Образ ${IMAGE_NAME} успешно собран."
 
-    # Пример Slack уведомлений, если сборка неудачна
     - name: Slack Notification (Failure)
       if: failure()
       uses: rtCamp/action-slack-notify@v2
