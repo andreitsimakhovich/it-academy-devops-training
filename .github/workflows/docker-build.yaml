@@ -1,8 +1,8 @@
-name: Docker Build and Push
+name: Docker Build
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 env:
   IMAGE_NAME: flask-demo
@@ -18,30 +18,23 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASS }}
+    - name: Build Docker image
+      run: |
+        docker build -t ${IMAGE_NAME} ./08.Docker
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./08.Docker
-        push: true
-        tags: ${{ secrets.DOCKER_USER }}/flask-demo:latest
-
+    # Пример Slack уведомлений, если сборка прошла успешно
     - name: Slack Notification (Success)
       if: success()
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: "✅ Образ flask-demo успешно собран и загружен."
+        SLACK_MESSAGE: "✅ Образ ${IMAGE_NAME} успешно собран."
 
+    # Пример Slack уведомлений, если сборка неудачна
     - name: Slack Notification (Failure)
       if: failure()
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: "❌ Ошибка при сборке образа flask-demo."
+        SLACK_MESSAGE: "❌ Ошибка при сборке образа ${IMAGE_NAME}."
 
