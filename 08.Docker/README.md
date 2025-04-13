@@ -8,7 +8,7 @@
 
 1. Create docker-compose file. Drupal 9 + MySql 8.
 2. Create .env file for storing passwords. Add .env to .gitignore.
-3. Run ```docker compose --env-file .env up -d```
+3. Run ```docker compose up -d```  
 Output:  
 ```bash
 WARN[0000] /home/debian/it-academy-training/08.Docker/docker-compose.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
