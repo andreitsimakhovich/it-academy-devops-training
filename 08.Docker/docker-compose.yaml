@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   drupal:
@@ -7,17 +7,16 @@ services:
       - "8080:80"
     volumes:
       - drupal_data:/var/www/html
+    env_file:
+      - .env
     depends_on:
       - db
 
   db:
     image: mysql:8
     restart: always
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    env_file:
+      - .env
     volumes:
       - db_data:/var/lib/mysql
 

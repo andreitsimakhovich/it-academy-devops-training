@@ -1,6 +1,11 @@
 # 08. Docker. Docker compose
 
 ## Homework Assignment 1: Docker Compose for Application Stacks
+
+### Structure of project
+|-- docker-compose.yaml
+|-- .env
+
 1. Create docker-compose file. Drupal 9 + MySql 8.
 2. Create .env file for storing passwords. Add .env to .gitignore.
 3. Run ```docker compose --env-file .env up -d```
@@ -66,3 +71,23 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
         Redirecting to <a href="/core/install.php">/core/install.php</a>.
     </body>
 </html>⏎                                                                                                                                                                                                 ```
+6. Connect to db and install drupal.
+7. Go to: http://localhost:8080  
+```bash
+debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+<meta name="Generator" content="Drupal 9 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/core/themes/olivero/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="alternate" type="application/rss+xml" title="" href="http://localhost:8080/rss.xml" />
+
+    <title>Добро пожаловать! | test-drupal</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_NxdiTg-nD52SF4K3ZaDi8HGjoPWlBBP00ZLH_rbS3U4.css" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_VQEigtqWfMa8GddxwXPTNTGwO1-k6PKQ3PsDB0IeNFo.css" />
+...
+```
