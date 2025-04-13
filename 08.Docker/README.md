@@ -114,3 +114,9 @@ root/
  ------Dockerfile  
  ------requirements.txt 
 
+1. Create all files regarding project structure.
+2. Create slack space and add new app. 
+3. Set up notifications in Slack.
+4. Add repository secrets in Github: SLACK_CHANNEL, SLACK_TOKEN, SLACK_WEBHOOK . 
+5. Push all changes to remote repo.
+6. Check msg in Slack.
