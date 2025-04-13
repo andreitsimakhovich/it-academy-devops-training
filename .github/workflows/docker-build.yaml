@@ -1,11 +1,11 @@
-name: Docker Build
+name: Docker Build and Push
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 env:
-  IMAGE_NAME: flask-demo
+  IMAGE_NAME: flask-demo  # Здесь определяем имя образа
 
 jobs:
   build:
@@ -19,18 +19,19 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Build Docker image
-      run: |
-        docker build -t ${IMAGE_NAME} ./08.Docker
+      uses: docker/build-push-action@v5
+      with:
+        context: ./08.Docker
+        push: true
+        tags: ${{ secrets.DOCKER_USER }}/${{ env.IMAGE_NAME }}:latest  # Используем IMAGE_NAME здесь
 
-    # Пример Slack уведомлений, если сборка прошла успешно
     - name: Slack Notification (Success)
       if: success()
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: "✅ Образ ${IMAGE_NAME} успешно собран."
+        SLACK_MESSAGE: "✅ Образ ${IMAGE_NAME} успешно собран и загружен."  # Используем переменную IMAGE_NAME здесь
 
-    # Пример Slack уведомлений, если сборка неудачна
     - name: Slack Notification (Failure)
       if: failure()
       uses: rtCamp/action-slack-notify@v2
