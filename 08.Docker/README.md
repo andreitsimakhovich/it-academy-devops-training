@@ -76,10 +76,10 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
     <body>
         Redirecting to <a href="/core/install.php">/core/install.php</a>.
     </body>
-</html>⏎   
+</html>⏎  
 
 ```                                                                                                                                                                                               ```
-6. Connect to db and install drupal.
+6.Connect to db and install drupal.
 7. Go to: http://localhost:8080  
 ```
 debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
