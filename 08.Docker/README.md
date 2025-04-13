@@ -103,3 +103,14 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
 
 ## Homework Assignment 2: Docker build automation (github action)
 
+### Structure of project
+
+root/
+|-- .github/  
+ -------------workflows/  
+ -------------------docker-build.yaml
+|-- 08.Docker/  
+ ------app.py    
+ ------Dockerfile  
+ ------requirements.txt 
+
