@@ -103,7 +103,3 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
 
 ## Homework Assignment 2: Docker build automation (github action)
 
-1. Create app.py file.
-2. Creaete Dockerfile - python app - Hello from python! 
-3. Create requirements.txt
-
