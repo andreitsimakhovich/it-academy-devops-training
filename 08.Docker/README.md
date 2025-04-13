@@ -105,7 +105,7 @@ debian@vbox ~/i/08.Docker (master)> curl http://localhost:8080
 
 ### Structure of project
 
-root/
+root/  
 |-- .github/  
  -------------workflows/  
  -------------------docker-build.yaml  
