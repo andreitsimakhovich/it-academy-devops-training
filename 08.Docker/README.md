@@ -49,7 +49,8 @@ WARN[0000] /home/debian/it-academy-training/08.Docker/docker-compose.yaml: the a
  ✔ Volume "08docker_db_data"      Created                                                                                                                                                           0.0s 
  ✔ Container 08docker-db-1        Started                                                                                                                                                           8.2s 
  ✔ Container 08docker-drupal-1    Started                                                                                                                                                           9.2s ```
-4. Check containers:  
+
+4. Check containers:    
 ```bash
 debian@vbox ~/i/08.Docker (master) [4]> docker ps
 CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS                                     NAMES
