@@ -87,10 +87,15 @@ NAME       STATUS   ROLES           AGE   VERSION
 minikube   Ready    control-plane   10m   v1.32.0
 ```
 
-
-
-
-
+## Homework Assignment 3: GitHub Actions for KinD Cluster Setup
+1. Create kind-cluster.yml
+2. Push changes
+3. Check number of nodes in Github actions 
+```
+Run kubectl get nodes
+NAME                       STATUS     ROLES           AGE   VERSION
+ci-cluster-control-plane   NotReady   control-plane   4s    v1.30.0
+```
 
 
 
