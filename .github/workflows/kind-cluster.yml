@@ -50,4 +50,3 @@ jobs:
       - name: Get cluster nodes
         run: |
           kubectl get nodes
-

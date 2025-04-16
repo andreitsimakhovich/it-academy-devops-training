@@ -1,32 +1,40 @@
-name: Setup Minikube Cluster
+name: Manual Minikube Setup
 
 on:
   pull_request:
     branches:
-      - master
+      - '**'
 
 jobs:
   minikube:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04  # важно!
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Minikube
-        uses: medyagh/setup-minikube@v0.0.12
-        with:
-          minikube-version: 'v1.33.1'
-          kubernetes-version: 'v1.29.1'
-          driver: docker
-
-      - name: Verify cluster status
+      - name: Install dependencies
         run: |
-          minikube status
-          kubectl version --client
-          kubectl cluster-info
+          sudo apt-get update -y
+          sudo apt-get install -y conntrack curl
 
-      - name: Wait for node to become ready
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: Install Minikube
+        run: |
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+      - name: Start Minikube
+        run: |
+          sudo minikube start --driver=docker
+          kubectl get nodes
+
+      - name: Verify cluster is ready
         run: |
           for i in {1..30}; do
             STATUS=$(kubectl get nodes -o jsonpath='{.items[0].status.conditions[?(@.type=="Ready")].status}')
@@ -38,7 +46,8 @@ jobs:
             sleep 5
           done
 
-      - name: Get cluster nodes
+      - name: Cluster info
         run: |
-          kubectl get nodes
+          kubectl cluster-info
+          kubectl get pods -A
 
