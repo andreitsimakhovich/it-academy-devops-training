@@ -20,29 +20,5 @@ jobs:
 
       - name: Install kubectl
         run: |
-          KUBECTL_VERSION=$(curl -s https://dl.k8s.io/release/stable.txt)
-          curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
-
-      - name: Install Minikube
-        run: |
-          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-          sudo install minikube-linux-amd64 /usr/local/bin/minikube
-          minikube version
-
-      - name: Start Minikube
-        run: |
-          sudo minikube start --driver=docker
-          kubectl get nodes
-
-      - name: Wait for node to become ready
-        run: |
-          for i in {1..30}; do
-            STATUS=$(kubectl get nodes -o jsonpath='{.items[0].status.conditions[?(@.type=="Ready")].status}')
-            if [ "$STATUS" == "True" ]; then
-              echo "✅ Node is Ready"
-              break
-            fi
-            echo "⏳ Waiting for node to be ready... ($i/
+          curl -LO "https://dl.k8s.io/re
 
