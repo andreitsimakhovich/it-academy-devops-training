@@ -103,3 +103,24 @@ ci-cluster-control-plane   Ready    control-plane   25s   v1.30.0
 4. Execution time: 1 m 4 s
 
 ## Homework Assignment 4: GitHub Actions for Minikube Cluster Setup
+
+1. Create minikube-setup.yaml
+2. Push changes
+3. Create additional branch, make some changes and create pull request.
+4. Check number of nodes in Github actions
+```
+Run kubectl cluster-info
+Kubernetes control plane is running at https://192.168.49.2:8443
+CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+NAME       STATUS   ROLES           AGE   VERSION
+minikube   Ready    control-plane   4s    v1.32.0
+NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
+kube-system   etcd-minikube                      0/1     Running   0          2s
+kube-system   kube-apiserver-minikube            0/1     Running   0          2s
+kube-system   kube-controller-manager-minikube   0/1     Running   0          2s
+kube-system   kube-scheduler-minikube            0/1     Running   0          2s
+kube-system   storage-provisioner                0/1     Pending   0          1s
+```
+5. Execution time: 51s
