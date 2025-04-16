@@ -93,22 +93,13 @@ minikube   Ready    control-plane   10m   v1.32.0
 3. Check number of nodes in Github actions 
 ```
 Run kubectl get nodes
-NAME                       STATUS     ROLES           AGE   VERSION
-ci-cluster-control-plane   NotReady   control-plane   4s    v1.30.0
+  kubectl get nodes
+  shell: /usr/bin/bash -e {0}
+  
+NAME                       STATUS   ROLES           AGE   VERSION
+ci-cluster-control-plane   Ready    control-plane   25s   v1.30.0
+
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+4. Execution time: 1 m 4 s
 
 ## Homework Assignment 4: GitHub Actions for Minikube Cluster Setup
