@@ -61,3 +61,13 @@ jobs:
           # Подключаемся к удалённому хосту через Bastion
           ssh -o StrictHostKeyChecking=no remote-host 'uptime'
 
+      - name: Check pods k8s
+        run: |
+          kubectl get pods -A >> output.txt
+
+      - name: Upload output as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: script-output
+          path: output.txt
+
