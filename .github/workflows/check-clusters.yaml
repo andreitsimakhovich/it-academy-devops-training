@@ -1,0 +1,60 @@
+name: Check Clusters and Notify Slack
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-clusters:
+    runs-on: ubuntu-latest
+
+    env:
+      BASTION_HOST: 178.124.206.53      # IP вашего bastion
+      K8S_HOST: 192.168.208.19          # IP машины с K8s
+      K3S_HOST: 192.168.203.10          # IP машины с K3s
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run Kubernetes Checks via Bastion
+        id: check
+        run: |
+          set -e
+
+          check_cluster() {
+            HOST_IP=$1
+            NAME=$2
+
+            echo "Checking cluster on $NAME ($HOST_IP)..."
+
+            ERRORS=$(ssh -o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p -o StrictHostKeyChecking=no user@${BASTION_HOST}" user@${HOST_IP} \
+              "kubectl get pods --all-namespaces --no-headers" | grep -E 'CrashLoopBackOff|Error|ImagePullBackOff|Pending|Unknown' || true)
+
+            if [[ -n \"$ERRORS\" ]]; then
+              echo "::set-output name=slack_message::❌ Cluster check failed on *$NAME*:\n\`\`\`\n$ERRORS\n\`\`\`"
+              exit 1
+            else
+              echo "✅ Cluster $NAME is healthy."
+            fi
+          }
+
+          check_cluster "$K8S_HOST" "Kubernetes"
+          check_cluster "$K3S_HOST" "K3s"
+
+      - name: Send Slack Notification (on failure)
+        if: failure()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "${{ steps.check.outputs.slack_message || '❌ Cluster check failed. See logs for details.' }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
