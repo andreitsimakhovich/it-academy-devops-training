@@ -1,0 +1,50 @@
+name: Connect to Remote Host via Bastion
+
+on:
+  workflow_dispatch:  # Это позволяет запускать экшн вручную
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Настроим SSH
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Устанавливаем конфигурацию SSH для подключения через Bastion
+      - name: Configure SSH
+        run: |
+          # Создаём директорию для SSH
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Параметры подключения (передаем прямо в файле)
+          BASTION_IP="178.124.206.53"        # Укажите IP вашего Bastion сервера
+          BASTION_USER="jump_sa"            # Укажите имя пользователя для Bastion
+          BASTION_PORT="32510"                      # Порт для Bastion сервера (по умолчанию 22)
+          REMOTE_HOST_IP="192.168.208.19"        # Укажите IP удалённого хоста
+          REMOTE_USER="root"              # Укажите имя пользователя для удалённого хоста
+          REMOTE_PORT="22"                       # Порт для удалённого хоста (по умолчанию 22)
+
+          # Создаём конфигурацию для SSH
+          echo "Host bastion
+          Hostname $BASTION_IP
+          User $BASTION_USER
+          Port $BASTION_PORT
+          IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
+
+          echo "Host remote-host
+          Hostname $REMOTE_HOST_IP
+          User $REMOTE_USER
+          Port $REMOTE_PORT
+          ProxyJump bastion" >> ~/.ssh/config
+
+      # Выполняем команду на удалённом хосте через Bastion
+      - name: Connect to remote host via Bastion
+        run: |
+          # Подключаемся к удалённому хосту через Bastion
+          ssh -o StrictHostKeyChecking=no remote-host 'uptime'
