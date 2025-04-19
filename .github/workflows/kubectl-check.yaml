@@ -38,7 +38,7 @@ jobs:
         ssh target 'kubectl version --short' | tee kubectl_output.txt
 
     - name: Upload kubectl version output
-      uses: actions/upload-artifact@v2  # Правильная версия для загрузки артефактов
+      uses: actions/upload-artifact@v4  # Правильная версия для загрузки артефактов
       with:
         name: kubectl-version
         path: kubectl_output.txt
