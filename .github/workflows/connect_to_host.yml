@@ -43,11 +43,17 @@ jobs:
           Port $REMOTE_PORT
           ProxyJump bastion" >> ~/.ssh/config
 
-      # Добавляем удалённый хост в known_hosts
-      - name: Add remote host to known_hosts
+      # Добавляем Bastion в known_hosts
+      - name: Add bastion to known_hosts
         run: |
-          # Добавляем удалённый хост в known_hosts для предотвращения ошибки "Host key verification failed"
-          ssh-keyscan -H $REMOTE_HOST_IP >> ~/.ssh/known_hosts
+          # Добавляем Bastion в known_hosts для предотвращения ошибки "Host key verification failed"
+          ssh-keyscan -H $BASTION_IP >> ~/.ssh/known_hosts
+
+      # Добавляем удалённый хост в known_hosts через Bastion
+      - name: Add remote host to known_hosts via bastion
+        run: |
+          # Добавляем удалённый хост в known_hosts через Bastion сервер
+          ssh -o StrictHostKeyChecking=no bastion "ssh-keyscan -H $REMOTE_HOST_IP" >> ~/.ssh/known_hosts
 
       # Выполняем команду на удалённом хосте через Bastion
       - name: Connect to remote host via Bastion
