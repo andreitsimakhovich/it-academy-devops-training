@@ -30,20 +30,6 @@ jobs:
           target_ip=$(jq -r '.target.ip' .github/config/hosts.json)
           target_user=$(jq -r '.target.user' .github/config/hosts.json)
 
-          cat <<EOF > ~/.ssh/config
-Host bastion
-  HostName ${bastion_ip}
-  User ${bastion_user}
-  Port ${bastion_port}
-  StrictHostKeyChecking no
-
-Host target
-  HostName ${target_ip}
-  User ${target_user}
-  ProxyJump bastion
-  StrictHostKeyChecking no
-EOF
-
       - name: Run kubectl on target via bastion
         run: |
           bastion_ip=$(jq -r '.bastion.ip' .github/config/hosts.json)
