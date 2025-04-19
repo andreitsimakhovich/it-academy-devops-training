@@ -15,6 +15,7 @@ jobs:
 
       - name: Add Bastion Host to known_hosts
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan -H "${{ secrets.BASTION_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Add Remote Host to known_hosts (through Bastion)
