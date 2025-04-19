@@ -63,7 +63,7 @@ jobs:
 
       - name: Check pods k8s
         run: |
-          kubectl get pods -A >> output.txt
+          ssh -o StrictHostKeyChecking=no remote-host 'uptime' kubectl get pods -A >> output.txt
 
       - name: Upload output as artifact
         uses: actions/upload-artifact@v4
