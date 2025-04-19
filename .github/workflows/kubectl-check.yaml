@@ -8,52 +8,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Install dependencies (jq, sshpass)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y jq sshpass
+      - name: Install dependencies (jq, sshpass)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq sshpass
 
-    - name: Configure SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+      - name: Write SSH private key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
-        # Извлекаем данные из hosts.json
-        bastion_ip=$(jq -r '.bastion.ip' ./.github/config/hosts.json)
-        bastion_user=$(jq -r '.bastion.user' ./.github/config/hosts.json)
-        bastion_port=$(jq -r '.bastion.port // 22' ./.github/config/hosts.json)
-        target_ip=$(jq -r '.target.ip' ./.github/config/hosts.json)
-        target_user=$(jq -r '.target.user' ./.github/config/hosts.json)
+      - name: Generate SSH config
+        run: |
+          bastion_ip=$(jq -r '.bastion.ip' .github/config/hosts.json)
+          bastion_user=$(jq -r '.bastion.user' .github/config/hosts.json)
+          bastion_port=$(jq -r '.bastion.port // 22' .github/config/hosts.json)
+          target_ip=$(jq -r '.target.ip' .github/config/hosts.json)
+          target_user=$(jq -r '.target.user' .github/config/hosts.json)
 
-        # Создаём SSH config
-        echo "Host bastion
-              HostName $bastion_ip
-              User $bastion_user
-              Port $bastion_port
-      StrictHostKeyChecking no
-              " > ~/.ssh/config
+          cat <<EOF > ~/.ssh/config
+Host bastion
+  HostName ${bastion_ip}
+  User ${bastion_user}
+  Port ${bastion_port}
+  StrictHostKeyChecking no
 
-    - name: Run kubectl via bastion using password auth
-      run: |
-        bastion_ip=$(jq -r '.bastion.ip' ./.github/config/hosts.json)
-        bastion_user=$(jq -r '.bastion.user' ./.github/config/hosts.json)
-        bastion_port=$(jq -r '.bastion.port // 22' ./.github/config/hosts.json)
-        target_ip=$(jq -r '.target.ip' ./.github/config/hosts.json)
-        target_user=$(jq -r '.target.user' ./.github/config/hosts.json)
+Host target
+  HostName ${target_ip}
+  User ${target_user}
+  ProxyJump bastion
+  StrictHostKeyChecking no
+EOF
 
-        sshpass -p "${{ secrets.REMOTE_HOST }}" ssh \
-          -o ProxyJump="$bastion_user@$bastion_ip:$bastion_port" \
-          -o StrictHostKeyChecking=no \
-          "$target_user@$target_ip" \
-          'kubectl version --short' | tee kubectl_output.txt
+      - name: Run kubectl on target via bastion
+        run: |
+          bastion_ip=$(jq -r '.bastion.ip' .github/config/hosts.json)
+          bastion_user=$(jq -r '.bastion.user' .github/config/hosts.json)
+          bastion_port=$(jq -r '.bastion.port // 22' .github/config/hosts.json)
+          target_ip=$(jq -r '.target.ip' .github/config/hosts.json)
+          target_user=$(jq -r '.target.user' .github/config/hosts.json)
 
-    - name: Upload kubectl version output
-      uses: actions/upload-artifact@v4
-      with:
-        name: kubectl-version
-        path: kubectl_output.txt
+          sshpass -p "${{ secrets.REMOTE_HOST_PASSWORD }}" ssh \
+            -o ProxyJump="${bastion_user}@${bastion_ip}:${bastion_port}" \
+            -o StrictHostKeyChecking=no \
+            "${target_user}@${target_ip}" \
+            'kubectl version --short' | tee kubectl_output.txt
+
+      - name: Upload kubectl version output
+        uses: actions/upload-artifact@v4
+        with:
+          name: kubectl-version
+          path: kubectl_output.txt
 
