@@ -55,7 +55,7 @@ kube-system   nodelocaldns-5b7ch                         1/1     Running        
 kube-system   nodelocaldns-9bdqq                         1/1     Running            0          2d21h
 
 ```
-4. Push all changes to remore repo
+4. Push all changes to remote repo
 5. Go to github and open Actions section
 6. Run "Check status of pods and Slack notification" action
 7. Actual result: notification in slack from k8s cluster. See screenshot.
