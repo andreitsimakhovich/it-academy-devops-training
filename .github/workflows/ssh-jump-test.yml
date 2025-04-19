@@ -10,6 +10,9 @@ jobs:
       - name: Install sshpass and OpenSSH client
         run: sudo apt-get update && sudo apt-get install -y sshpass openssh-client
 
+      - name: Create .ssh directory
+        run: mkdir -p ~/.ssh
+
       - name: Add Bastion Host to known_hosts
         run: |
           ssh-keyscan -H "${{ secrets.BASTION_HOST }}" >> ~/.ssh/known_hosts
