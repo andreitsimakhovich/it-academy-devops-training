@@ -33,7 +33,8 @@ Date:       2025-04-14T00:28:19Zi
 kubectl apply -f pod-err.yaml
 
  ```
-3. Check pods status k8s 
+3. Check pods status k8s
+``` 
 debian@vbox ~/i/10.K8s (master)> kubectl get pods -A                                                                                                                                                     
 NAMESPACE     NAME                                       READY   STATUS             RESTARTS   AGE
 default       broken-pod                                 0/1     ImagePullBackOff   0          33m
