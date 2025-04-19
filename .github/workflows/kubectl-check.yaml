@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4  # Правильная версия для checkout
 
     - name: Install jq
       run: |
@@ -22,17 +22,23 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
-        # Генерируем config с нестандартным портом и ProxyJump
-        echo -e "Host bastion\n  HostName $(jq -r '.bastion.ip' ./.github/config/hosts.json)\n  User $(jq -r '.bastion.user' .github/config/hosts.json)\n  Port $(jq -r '.bastion.port // 22' .github/config/hosts.json)\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
+        # Чтение данных из .github/config/hosts.json
+        bastion_ip=$(jq -r '.bastion.ip' ./.github/config/hosts.json)
+        bastion_user=$(jq -r '.bastion.user' ./.github/config/hosts.json)
+        bastion_port=$(jq -r '.bastion.port // 22' ./.github/config/hosts.json)
+        target_ip=$(jq -r '.target.ip' ./.github/config/hosts.json)
+        target_user=$(jq -r '.target.user' ./.github/config/hosts.json)
 
-        echo -e "Host target\n  HostName $(jq -r '.target.ip' ./.github/config/hosts.json)\n  User $(jq -r '.target.user' .github/config/hosts.json)\n  ProxyJump bastion\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
+        # Запись конфигурации в ~/.ssh/config
+        echo -e "Host bastion\n  HostName $bastion_ip\n  User $bastion_user\n  Port $bastion_port\n  StrictHostKeyChecking no\n" > ~/.ssh/config
+        echo -e "Host target\n  HostName $target_ip\n  User $target_user\n  ProxyJump bastion\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
 
     - name: Run kubectl via bastion and target
       run: |
         ssh target 'kubectl version --short' | tee kubectl_output.txt
 
     - name: Upload kubectl version output
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v2  # Правильная версия для загрузки артефактов
       with:
         name: kubectl-version
         path: kubectl_output.txt
