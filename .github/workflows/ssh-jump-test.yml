@@ -1,0 +1,20 @@
+name: Test SSH via Jump Host
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ssh-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sshpass and OpenSSH client
+        run: sudo apt-get update && sudo apt-get install -y sshpass openssh-client
+
+      - name: Add Bastion Host to known_hosts
+        run: |
+          ssh-keyscan -H "${{ secrets.BASTION_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Add Remote Host to known_hosts (through Bastion)
+        run: |
+          sshpass -p "${{ secrets.BASTION_PASSWORD }}" ssh -o StrictHostKeyChecking=no -o ProxyCommand="sshpass -p ${{ secrets.BASTION_PASSWORD }} ssh -W %h:%p -o StrictHostKeyChecking=no -p ${{ secrets.BASTION_PORT }} ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}" ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} 'echo Connected to remote host via bastion'
+
