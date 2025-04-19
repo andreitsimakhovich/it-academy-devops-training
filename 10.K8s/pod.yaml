@@ -8,7 +8,7 @@ spec:
   containers:
   - image: ghcr.io/pluhin/busy-box:latest
     command:
-      - "sleep"
+      - "sleeeeeeeep"
       - "604800"
     imagePullPolicy: IfNotPresent
     name: ubuntu-default
