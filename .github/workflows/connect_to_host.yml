@@ -53,7 +53,7 @@ jobs:
       - name: Add remote host to known_hosts via bastion
         run: |
           # Добавляем удалённый хост в known_hosts через Bastion сервер
-          ssh -o StrictHostKeyChecking=no -p "$BASTION_PORT" "$BASTION_USER@$BASTION_IP" "ssh-keyscan -p 22 $REMOTE_HOST_IP" >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no -p "$BASTION_PORT" "$BASTION_USER"@"$BASTION_IP" "ssh-keyscan -p 22 $REMOTE_HOST_IP" >> ~/.ssh/known_hosts
 
       # Выполняем команду на удалённом хосте через Bastion
       - name: Connect to remote host via Bastion
