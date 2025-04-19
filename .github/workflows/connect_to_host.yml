@@ -47,7 +47,7 @@ jobs:
       - name: Add bastion to known_hosts
         run: |
           # Добавляем Bastion в known_hosts для предотвращения ошибки "Host key verification failed"
-          ssh-keyscan -p32510 178.124.206.53 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 32510 178.124.206.53 >> ~/.ssh/known_hosts
 
       # Добавляем удалённый хост в known_hosts через Bastion
       - name: Add remote host to known_hosts via bastion
