@@ -31,11 +31,11 @@ jobs:
 
         # Создаём SSH config
         echo "Host bastion
-  HostName $bastion_ip
-  User $bastion_user
-  Port $bastion_port
-  StrictHostKeyChecking no
-" > ~/.ssh/config
+              HostName $bastion_ip
+              User $bastion_user
+              Port $bastion_port
+      StrictHostKeyChecking no
+              " > ~/.ssh/config
 
     - name: Run kubectl via bastion using password auth
       run: |
