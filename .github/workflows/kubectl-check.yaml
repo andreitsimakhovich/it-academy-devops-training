@@ -23,9 +23,9 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
 
         # Генерируем config с нестандартным портом и ProxyJump
-        echo -e "Host bastion\n  HostName $(jq -r '.bastion.ip' .github/config/hosts.json)\n  User $(jq -r '.bastion.user' .github/config/hosts.json)\n  Port $(jq -r '.bastion.port // 22' .github/config/hosts.json)\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
+        echo -e "Host bastion\n  HostName $(jq -r '.bastion.ip' ./.github/config/hosts.json)\n  User $(jq -r '.bastion.user' .github/config/hosts.json)\n  Port $(jq -r '.bastion.port // 22' .github/config/hosts.json)\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
 
-        echo -e "Host target\n  HostName $(jq -r '.target.ip' .github/config/hosts.json)\n  User $(jq -r '.target.user' .github/config/hosts.json)\n  ProxyJump bastion\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
+        echo -e "Host target\n  HostName $(jq -r '.target.ip' ./.github/config/hosts.json)\n  User $(jq -r '.target.user' .github/config/hosts.json)\n  ProxyJump bastion\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
 
     - name: Run kubectl via bastion and target
       run: |
