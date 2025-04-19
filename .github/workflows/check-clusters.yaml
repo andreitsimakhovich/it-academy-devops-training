@@ -3,7 +3,7 @@ name: Check Clusters and Notify Slack
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   check-clusters:
