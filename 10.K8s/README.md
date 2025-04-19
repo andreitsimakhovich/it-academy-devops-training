@@ -51,7 +51,7 @@ kube-system   kube-proxy-hmjm8                           1/1     Running        
 kube-system   kube-scheduler-node1                       1/1     Running            1          2d21h
 kube-system   nginx-proxy-node2                          1/1     Running            0          2d21h
 kube-system   nodelocaldns-5b7ch                         1/1     Running            0          2d21h
-kube-system   nodelocaldns-9bdqq                         1/1     Running            0          2d21h``
+kube-system   nodelocaldns-9bdqq                         1/1     Running            0          2d21h
 
 ```
 4. Push all changes to remore repo
