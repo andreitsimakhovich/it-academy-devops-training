@@ -61,13 +61,28 @@ jobs:
           # Подключаемся к удалённому хосту через Bastion
           ssh -o StrictHostKeyChecking=no remote-host 'uptime'
 
-      - name: Check pods k8s
+      #- name: Check pods k8s
+      #  run: |
+      #    ssh -o StrictHostKeyChecking=no remote-host 'kubectl get pods -A' >> output.txt
+
+      - name: Run kubectl and check pod statuses
         run: |
-          ssh -o StrictHostKeyChecking=no remote-host 'kubectl get pods -A' >> output.txt
+          # Получаем полный вывод kubectl и сохраняем в файл
+           ssh -o StrictHostKeyChecking=no remote-host 'kubectl get pods -A' > pods_output.txt
+
+          echo "=== Полный вывод kubectl ==="
+          cat pods_output.txt
+
+          echo "=== Поды не в статусе Running ==="
+          awk '$4 != "Running" && NR > 1' pods_output.txt > not_running_pods.txt || true
+          cat not_running_pods.txt || echo "Все поды в статусе Running"
+
 
       - name: Upload output as artifact
         uses: actions/upload-artifact@v4
         with:
           name: script-output
-          path: output.txt
+          path: |
+            pods_output.txt 
+            not_running_pods.txt
 
